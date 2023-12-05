@@ -22,8 +22,14 @@ for l in f:
         continue
     if "seeds" in l:
         name, seed = l.split(":")
-        for s in seed.split():
-            seeds[int(s)] = {}
+        seedarray = seed.split()
+        for i,s in enumerate(seedarray):
+            print("adding seeds",s,"-",str(int(seedarray[i])+int(seedarray[i+1])))
+            if i%2==1:
+                continue
+            for r in range(int(seedarray[i]),int(seedarray[i])+int(seedarray[i+1])):
+                seeds[r] = {}
+        
     elif "map" in l:
         name, map=l.split()
         current_category=name
@@ -38,7 +44,7 @@ for l in f:
         })
 
 for seed in seeds:
-    # print("Seed:", seed)
+    print("Seed:", seed)
     seeds[seed]["soil"] = map_value(almanac["seed-to-soil"],seed)
     # print("fertilizer")
     seeds[seed]["fertilizer"] = map_value(almanac["soil-to-fertilizer"],seeds[seed]["soil"])
